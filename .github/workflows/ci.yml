@@ -1,9 +1,9 @@
-name: CI — zs-core-fhir-validator
+name: CI - zs-core-fhir-validator
 
-on:
+"on":
   push:
     branches: [main]
-  pull_request:
+  pull_request: null
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
