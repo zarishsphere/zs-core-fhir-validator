@@ -267,12 +267,12 @@ func TestValidateObservation_Valid(t *testing.T) {
 func TestValidateObservation_DataAbsentReasonWithValue_Invariant(t *testing.T) {
 	// FHIR invariant obs-6: dataAbsentReason SHALL only be present if value[x] absent
 	obs := map[string]any{
-		"resourceType": "Observation",
-		"id":           "obs-inv",
-		"meta":         map[string]any{"lastUpdated": "2026-01-15T10:00:00Z"},
-		"status":       "final",
-		"code":         map[string]any{"text": "Heart rate"},
-		"subject":      map[string]any{"reference": "Patient/test-001"},
+		"resourceType":  "Observation",
+		"id":            "obs-inv",
+		"meta":          map[string]any{"lastUpdated": "2026-01-15T10:00:00Z"},
+		"status":        "final",
+		"code":          map[string]any{"text": "Heart rate"},
+		"subject":       map[string]any{"reference": "Patient/test-001"},
 		"valueQuantity": map[string]any{"value": 72, "unit": "beats/min"},
 		"dataAbsentReason": map[string]any{
 			"coding": []any{map[string]any{"code": "unknown"}},
@@ -357,8 +357,14 @@ func TestValidationResult_ToOperationOutcome_Valid(t *testing.T) {
 		"resourceType": "Patient",
 		"id":           "pt-valid",
 		"meta":         map[string]any{"lastUpdated": "2026-01-15T10:00:00Z"},
-		"active":       true,
-		"gender":       "female",
+		"extension": []any{
+			map[string]any{
+				"url":         "https://fhir.zarishsphere.com/StructureDefinition/ext/tenant-id",
+				"valueString": "cpi:bgd-health:camp-1w",
+			},
+		},
+		"active": true,
+		"gender": "female",
 	}
 	result := v.Validate(resource)
 	require.True(t, result.IsValid())
